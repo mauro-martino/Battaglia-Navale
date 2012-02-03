@@ -4,5 +4,5 @@
     android:dither="true"
     android:filter="true"
     android:gravity="center"
-    android:src="@drawable/acqua"
+    android:src="@drawable/sfondotitolo"
     android:tileMode="disabled" />

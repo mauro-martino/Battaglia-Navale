@@ -5,6 +5,9 @@
     <string name="title">Battaglia Navale</string>
     <string name="startgame">Gioca!</string>
     <string name="options">Opzioni</string>
+    <string name="username">Inserisci il tuo Username</string>
+    <string name="pass">Inserisci la tua Password</string>
+    <string name="utente">Inserisci il nome dell utente da sfidare</string>
     
 
 </resources>
