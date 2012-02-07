@@ -115,37 +115,37 @@ public class ScegliNave extends Activity {
             		nord = false;}                //a Nord
             	else {
             		for (int  z = j - (ship.getSize() - 1); z <= j - 1 && thereIsRoom; z++) { //se per tutte le caselle a nord c'è spazio si può posizionare la nave
-                        thereIsRoom = thereIsRoom & (B[z][i] == '-');
+                        thereIsRoom = thereIsRoom & (B[z][i] == '-'); //si somma il valore attuale di thereIsRoom con il booleano associato alla casella libera
                         if (thereIsRoom) {
                         	B[j][i] = 'Z';
-                        	nord = true;}
+                        	nord = true;}     //la nave può essere posizionata a nord
                         else {
-                        	nord = false;
+                        	nord = false;     //la nave non può essere posizionata a nord
                         }
                     }
             	}
-            	thereIsRoom = true;
+            	thereIsRoom = true;       //resetta la variabile thereIsRoom a true
             	if (i + (ship.getSize()-1) >= 10) {//la nave esce fuori dalla griglia a ovest
             		thereIsRoom = false;
             		ovest = false;}
             	else {
             		for (int  z = i + (ship.getSize() - 1); z >= i + 1 && thereIsRoom; z--) {//se per tutte le caselle a ovest c'è spazio si può posizionare la nave
-                        thereIsRoom = thereIsRoom & (B[j][z] == '-');
+                        thereIsRoom = thereIsRoom & (B[j][z] == '-'); //si somma il valore attuale di thereIsRoom con il booleano associato alla casella libera
                         if (thereIsRoom) {
-                        	B[j][i] = 'Z';
-                        	ovest = true;}
+                        	B[j][i] = 'Z';     //Z è un char di appoggio
+                        	ovest = true;}     //la nave può essere posizionata a ovest
                         else {
-                        	ovest = false;
+                        	ovest = false;     //la nave non può essere posizionata a ovest
                         }
                     }
             	}
-            	thereIsRoom = true;
-            	if (j + (ship.getSize()-1) >= 10) {//Sud
+            	thereIsRoom = true;        //resetta la variabile thereIsRoom a true
+            	if (j + (ship.getSize()-1) >= 10) {//la nave esce fuori dalla griglia a sud
             		thereIsRoom = false;
             		sud = false;}
             	else {
             		for (int  z = j + (ship.getSize() - 1); z >= j + 1 && thereIsRoom; z--) {
-                        thereIsRoom = thereIsRoom & (B[z][i] == '-');
+                        thereIsRoom = thereIsRoom & (B[z][i] == '-'); //si somma il valore attuale di thereIsRoom con il booleano associato alla casella libera
                         if (thereIsRoom) {
                         	B[j][i] = 'Z';
                         	sud = true;}
@@ -154,13 +154,13 @@ public class ScegliNave extends Activity {
                         }
                     }
             	}
-            	thereIsRoom = true;
-            	if (i - (ship.getSize()-1) < 0) {//Est
+            	thereIsRoom = true;       //resetta la variabile thereIsRoom a true
+            	if (i - (ship.getSize()-1) < 0) {//la nave esce fuori dalla griglia a est
             		thereIsRoom = false;
             		est = false;}
             	else {
             		for (int  z = i - (ship.getSize() - 1); z <= i - 1 && thereIsRoom; z++) {
-                        thereIsRoom = thereIsRoom & (B[j][z] == '-');
+                        thereIsRoom = thereIsRoom & (B[j][z] == '-'); //si somma il valore attuale di thereIsRoom con il booleano associato alla casella libera
                         if (thereIsRoom) {
                         	B[j][i] = 'Z';
                         	est = true;}
@@ -195,41 +195,41 @@ public class ScegliNave extends Activity {
     	        	passo+=1;}
     	        else {
     	        	if (ship.getSize() == 1) {  //elimina le posizioni intorno alla nave da 1
-    	        		if (B[j][i] == '-') {	
-    	        			A[j][i] = 'N';
-    	        			B[j][i] = 'X';
-    	        			if (j != 9){
-    	        				B[j+1][i] = 'X';
+    	        		if (B[j][i] == '-') {   //se il punto cliccato è vuoto
+    	        			A[j][i] = 'N';      //posiziona la nave nel punto cliccato
+    	        			B[j][i] = 'X';      //invalida la posizione cliccata
+    	        			if (j != 9){ //se la riga non è l'ultima
+    	        				B[j+1][i] = 'X'; //invalida la posizione sotto la riga cliccata
     	        			}
-    	        			if (i != 9){
-    	        				B[j][i+1] = 'X';
+    	        			if (i != 9){ //se la colonna non è l'ultima
+    	        				B[j][i+1] = 'X'; //invalida la posizione accanto alla colonna cliccata
     	        			}
-    	        			if (j != 0){
-    	        				B[j-1][i] = 'X';
+    	        			if (j != 0){ //se la riga non è la prima
+    	        				B[j-1][i] = 'X'; //invalida la posizione sopra la riga cliccata
     	        			}
-    	        			if (i != 0){
-    	        				B[j][i-1] = 'X';
+    	        			if (i != 0){ //se la colonna non è la prima
+    	        				B[j][i-1] = 'X'; //invalida la posizione accanto alla colonna cliccata
     	        			}
-    	        			if ((j != 9) & (i != 9)){
-    	        				B[j+1][i+1] = 'X';
+    	        			if ((j != 9) & (i != 9)){ //se non mi trovo in basso a destra della griglia
+    	        				B[j+1][i+1] = 'X';  //invalida la posizione in diagonale basso a destra
     	        			}
-    	        			if ((j != 9) & (i != 0)){
-    	        				B[j+1][i-1] = 'X';
+    	        			if ((j != 9) & (i != 0)){ //se non mi trovo in basso a sinistra della griglia
+    	        				B[j+1][i-1] = 'X';  //invalida la posizione in diagonale basso a sinistra
     	        			}
-    	        			if ((j != 0) & (i != 9)){
-    	        				B[j-1][i+1] = 'X';
+    	        			if ((j != 0) & (i != 9)){ //se non mi trovo in alto a destra della griglia
+    	        				B[j-1][i+1] = 'X';  //invalida la posizione in diagonale alto a destra
     	        			}
-    	        			if ((j != 0) & (i != 0)){
-    	        				B[j-1][i-1] = 'X';
+    	        			if ((j != 0) & (i != 0)){ //se non mi trovo in alto a sinistra della griglia
+    	        				B[j-1][i-1] = 'X';  //invalida la posizione in diagonale alto a sinistra
     	        			}
     	        		}
     	        	}
-    	        	else {
+    	        	else {// se non si può piazzare la nave in nessuna posizione avverti l'utente con un toast
     	        		Toast.makeText(getApplicationContext(), "Non hai cliccato una posizione valida", Toast.LENGTH_LONG).show();
     	        	}
     	        }
         	}
-    	    else {
+    	    else {// se la posizione è già occupata avverti l'utente con un toast
     	    	Toast.makeText(getApplicationContext(), "Non hai cliccato una posizione valida", Toast.LENGTH_LONG).show();
     	    }
 	        if (ship.getSize() == 1) {  //se la dimensione della nave è 1
@@ -461,26 +461,26 @@ public class ScegliNave extends Activity {
                 imageView = (ImageView) convertView;}
             int a = (int) Math.floor(position/10);
             int b = (int) position % 10;
-			if (A[a][b] == 'N'){  //Se è presente una nave disegnala altrimenti disegna acqua
+			if (A[a][b] == 'N'){  //Se è presente una nave disegnala altrimenti disegna acqua o la situazione di B
 		       	imageView.setImageResource(grafica[2]);}
 			else {
 				switch  (B[a][b]) {
-				case 'N':
+				case 'N':  //grafica corrispondente al nord
 					imageView.setImageResource(grafica[0]);
 					break;
-				case 'S':
+				case 'S': //grafica corrispondente al sud
 					imageView.setImageResource(grafica[0]);
 					break;
-				case 'E':
+				case 'E': //grafica corrispondente al est
 					imageView.setImageResource(grafica[0]);
 					break;
-				case 'O':
+				case 'O': //grafica corrispondente al ovest
 					imageView.setImageResource(grafica[0]);
 					break;
-				case 'X':
+				case 'X': //grafica corrispondente ad un punto invalidato
 					imageView.setImageResource(grafica[3]);
 					break;
-				default:
+				default: //grafica di default(in realtà non serve)
 					imageView.setImageResource(grafica[1]);
 					break;
 				}
@@ -495,7 +495,7 @@ public class ScegliNave extends Activity {
         };
         
     }
-    public void printBoard() {
+    public void printBoard() {  //unicamente necessario in fase di debug per far disegnare nel logcat la matrice B
         for (int i = 0; i < 10; i++)
             System.out.println(Arrays.toString(B[i]));
         	//System.out.println(Arrays.toString(A[i]));

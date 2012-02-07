@@ -89,11 +89,11 @@ public class Gioco extends Activity{
         
         attacco.setOnItemClickListener(itemClickListener);  //imposta un listener su l'item della griglia di attacco
         if (stato.equals("READY")) {   //stato READY
+        	Log.d("Btl",stato);
         	Message msg = new Message();
     		msg.setTo(utente+"@ppl.eln.uniroma2.it");
     		msg.setBody("READY");
 			connection.sendPacket(msg);
-			Log.d("Btl",stato);
 			stato = "CHOSETURN";
         }
         connection.addPacketListener(new PacketListener() { //listener sui pacchetti in arrivo
@@ -106,21 +106,23 @@ public class Gioco extends Activity{
 				String[] rerandom = body.split(delims); //divide il messaggio ricevuto in campi all'interno di un vettore
 				String reran = rerandom[0];  //header del messaggio
 				if (reran.equals("RERANDOM")) {  //se arriva un messaggio RERANDOM (stato sempre accessibile)
+					Log.d("Btl","Ricevuto il numero RERANDOM");
 					Message msg1 = new Message();
 			    	msg1.setTo(utente+"@ppl.eln.uniroma2.it");
 					msg1.setBody("RANDOM;"+number);
-					Log.d("Btl","Ricevuto il numero RERANDOM");
 					renumber = Integer.parseInt(rerandom[1]);
 					if (renumber < number) {
 						stato = "DIFESA";  //se il numero dell'avversario è minore del proprio si va in DIFESA
+						Log.d("Btl",stato);
 					}
 					else {                 //se il numero dell'avversario è maggiore del proprio si va in ATC
 						stato = "ATC";
+						Log.d("Btl",stato);
 					}
 				}
 				if (stato == "ATCWAIT") { //In fase di attacco si attende la ricezione del messaggio dell'avversario
-					String[] atcmsgsplit = body.split(delims);
 					Log.d("Btl",stato);
+					String[] atcmsgsplit = body.split(delims);
 					String header = atcmsgsplit[0];
 					if (header.equals("DIF")) {  //header del messaggio deve essere DIF
 						Log.d("Btl","header msg difensore corretto");
@@ -137,11 +139,11 @@ public class Gioco extends Activity{
 							B[j][i] = 'X'; //sostituisce nella propria matrice di attacco lo stato della cella avversaria
 						}
 					    stato = "ATCCONCLUSO";  //passa allo stato ATCONCLUSO in automatico
+					    Log.d("Btl",stato);
 					    Message msg2 = new Message();
 			    		msg2.setTo(utente+"@ppl.eln.uniroma2.it");
 						msg2.setBody("ENDTURN"); //invia il messaggio di ENDTURN
 						connection.sendPacket(msg2);
-						Log.d("Btl",stato);
 						stato = "DIFESA";  //cambia lo stato in difesa
 					}
 				}
@@ -191,7 +193,7 @@ public class Gioco extends Activity{
 					msg1.setBody("RANDOM;"+number);  //invio del numero random
 					connection.sendPacket(msg1);
 					if (header.equals("READY")) {  //se anche l'avversario è pronto
-						Log.d("Btl",stato);
+						Log.d("Btl","ricevuto messaggio READY");
 		    			stato = "WAITRANDOM";  //si passa allo stato WAITRANDOM
 					}
 				}
@@ -200,13 +202,15 @@ public class Gioco extends Activity{
 					Log.d("Btl",rrandom[0]);
 					String header = rrandom[0];
 					if (header.equals("RANDOM")) {  //se il messaggio ha l'header RANDOM
-						Log.d("Btl",stato);
+						Log.d("Btl","arrivato messaggio RANDOM");
 						rnumber = Integer.parseInt(rrandom[1]);  //intero random generato dall'avversario
 						if (rnumber < number) {   //se il numero ricevuto è minore di quello generato
 							stato = "DIFESA";    //si va in fase di difesa
+							Log.d("Btl",stato);
 						}
 						else {    //se il numero ricevuto è maggiore di quello generato
 							stato = "ATC";    //si va in fase di attacco
+							Log.d("Btl",stato);
 						}
 					}
 					else {  //se non arriva un messagio con header corretto vai nello stato RERANDOM
@@ -327,15 +331,15 @@ public class Gioco extends Activity{
             mContext = c;
         }
 
-        public int getCount() {
+        public int getCount() { //ritorna il numero di elementi totali in griglia
             return 100;
         }
 
-        public Object getItem(int position) {
+        public Object getItem(int position) {//non utilizzato per cui assegnato a null
             return null;
         }
 
-        public long getItemId(int position) {
+        public long getItemId(int position) {//non utilizzato per cui assegnato a null
             return 0;
         }
 
